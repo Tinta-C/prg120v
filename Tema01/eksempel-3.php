@@ -14,4 +14,3 @@
   print ("<br />");
   print ("Summen er $sum <br />");
   print ("Differansen er $differanse <br />");  /* resultater skrevet ut  */
-?>
