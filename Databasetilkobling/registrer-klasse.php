@@ -59,6 +59,10 @@
     ?>
 
     <a class="tilbake" href="index.php">tilbake til hovedmenyen</a>
+</div>
+</body>
+</html>
+
 
 
     
