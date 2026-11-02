@@ -1,5 +1,5 @@
 <?php
-// registrer-klasse.php - Registrerer en ny klasse include ("db.php"); // kobler til databasen?>
+// registrer-klasse.php - Registrerer en ny klasse include ("db.php");
 <!DOCTYPE html>
 <html lang="no">
 <head>
