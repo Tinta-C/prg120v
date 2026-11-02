@@ -1,4 +1,4 @@
-<?php
+<?php>
 // index.php - Hovedsiden for databasen
 <!DOCTYPE html>
 <html lang="no">
