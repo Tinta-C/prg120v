@@ -1,9 +1,9 @@
 <?php
 // db.php - Tilkobling til MySQL-database
-$host = "localhost"; // eller IP-adresse til databasen
-$user = "root"; // brukernavn for databasen
-$password = ""; // passord for databasen
-$database = "min_database"; // navn på databasen
+$host = "b-studentsql-1.usn.no"; // eller IP-adresse til databasen
+$user = "mucha4460"; // brukernavn for databasen
+$password = "ditt_passord"; // passord for databasen
+$database = "mucha4460"; // navn på databasen
 $conn = new mysqli($host, $user, $password, $database);
 
 // Sjekk tilkoblingen
