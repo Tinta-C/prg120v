@@ -2,6 +2,7 @@
 // vis-klasser.php
 include("db.php");
 ?>
+
 <h3>Oversikt over klasser</h3>
 
 <?php
@@ -24,6 +25,7 @@ for ($r = 1; $r <= $antallRader; $r++) {
 
 print("</table>");
 ?>
+
 <br /><br />
 <a href="index.php">Tilbake til hovedmenyen</a>
 
