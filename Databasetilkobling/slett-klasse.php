@@ -29,7 +29,7 @@ if ($antallRader > 0) {
 
     for ($r = 1; $r <= $antallRader; $r++) {
         $rad = mysqli_fetch_array($sqlResultat);
-        $klassekode = $rad["klassekde"];
+        $klassekode = $rad["klassekode"];
         $klassenavn = $rad["klassenavn"];
         $studiumkode = $rad["studiumkode"];
 
