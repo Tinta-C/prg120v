@@ -1,5 +1,5 @@
 <?php
-// vis-student.php
+// vis-studenter.php
 include("db.php");
 ?>
 
