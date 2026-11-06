@@ -1,4 +1,4 @@
-<?php>
+<?php
 // index.php - Hovedmeny for databasen
 ?>
 <h3>PRG120 - Obligatorisk oppgave 1</h3>
