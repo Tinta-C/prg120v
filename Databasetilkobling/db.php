@@ -2,16 +2,23 @@
 // db.php - Tilkobling til MySQL-database
 $host = "b-studentsql-1.usn.no"; // eller IP-adresse til databasen
 $user = "mucha4460"; // brukernavn for databasen
-$password = "ditt_passord"; // passord for databasen
+$password = "d4f7mucha4460"; // passord for databasen
 $database = "mucha4460"; // navn på databasen
-$conn = new mysqli($host, $user, $password, $database);
+$db = mysqli_connect($host, $user, $password, $database);
 
 // Sjekk tilkoblingen
-if ($conn->connect_error) {
-    die("Tilkobling mislyktes: " . $conn->connect_error);
+if (!$db) {
+    die("Tilkobling mislyktes: " . mysqli_connect_error());
 }
 
-//setter tegnsettet til UTF-8
-mysqli_set_charset($conn, "utf8");
+// Setter tegnsettet til UTF-8
+mysqli_set_charset($db, "utf8");
 ?>
+
+
+
+    
+
+
+
 
