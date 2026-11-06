@@ -6,6 +6,7 @@ include("db.php");
 <h3>Oversikt over studenter</h3>
 
 <?php
+// Henter alle studenter fra databasen
 $sqlSetning = "SELECT * FROM student ORDER By brukernavn;";
 $sqlResultat = mysqli_query($conn, $sqlSetning);
 $antallRader = mysqli_num_rows($sqlResultat);
