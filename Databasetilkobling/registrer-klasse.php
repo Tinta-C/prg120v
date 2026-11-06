@@ -3,7 +3,7 @@
 ?>
 <h3>Registrer ny klasse</h3>
 
-<form action="" method="post"> id="registrerKlasseSkjema" name=registrerKlasseSkjema">
+<form action="" method="post">
     Klassekode: <input type="text" id="klassekode" name="klassekode" required /><br />
     Klassenavn: <input type="text" id="klassenavn" name="klassenavn" required /><br />
     Studiumkode: <input type="text" id="studiumkode" name="studiumkode" required /><br />
