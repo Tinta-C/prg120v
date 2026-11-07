@@ -28,7 +28,7 @@ if ($antallRader > 0) {
     print("<tr><th>Brukernavn</th><th>Fornavn</th><th>Etternavn</th><th>Klassekode</th><th>Slett</th></tr>");
 
     for ($r =1; $r <= $antallRader; $r++) {
-        $rad = mysqli_fetch_array($sqlRestultat);
+        $rad = mysqli_fetch_array($sqlResultat);
         $brukernavn = $rad["brukernavn"];
         $fornavn = $rad["fornavn"];
         $etternavn = $rad["etternavn"];
