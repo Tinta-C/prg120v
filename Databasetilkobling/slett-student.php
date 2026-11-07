@@ -6,21 +6,20 @@ include("db.php");
 <h3>Slette student</h3>
 
 <?php
-// Sjekk om brukernavn er sendt med URL-en for å slette
+// Hvis en student er valgt for sletting via URL
 if (isset($_GET["brukernavn"])) {
     $brukernavn = $_GET["brukernavn"];
-
     $sqlSetning = "DELETE FROM student WHERE brukernavn='$brukernavn';";
 
     if (mysqli_query($conn, $sqlSetning)) {
-        print("Studenten med brukernavn $brukernavn ble slettet.<br /><br />");
+        print("Studenten med brukernavn <strong>$brukernavn</strong> er slettet.<br /><br />");
     } else {
         print("Feil ved sletting: " . mysqli_error($conn) . "<br /><br />");
     }
 }
 
 // Henter ut alle studenter for å vise tabellen med slette-lenker
-$sglSetning = "SELECT * FROM student ORDER BY brukernavn;";
+$sqlSetning = "SELECT * FROM student ORDER BY brukernavn;";
 $sqlResultat = mysqli_query($conn, $sqlSetning);
 $antallRader = mysqli_num_rows($sqlResultat);
 
