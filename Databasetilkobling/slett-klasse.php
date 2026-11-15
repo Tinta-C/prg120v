@@ -5,47 +5,62 @@ include("db.php");
 <h3>Slette klasse</h3>
 
 <?php
-// Sjekk om klassekode er sendt med URL-en for å slette
 if (isset($_GET["klassekode"])) {
     $klassekode = $_GET["klassekode"];
-
     $sqlSetning = "DELETE FROM klasse WHERE klassekode='$klassekode';";
 
     if (mysqli_query($conn, $sqlSetning)) {
-        print("Klassen med klassekode $klassekode ble slettet.<br /><br />");
+        print("<p>Klassen <strong>$klassekode</strong> er slettet.</p><br />");
     } else {
-        print("Feil ved sletting: " . mysqli_error($conn) . "<br /><br />");
+        // Fanger opp hvis klassen har studenter tilknyttet seg (fremmednøkkel-feil)
+        print("<p style='color:red;'>Kan ikke slette klasse <strong>$klassekode</strong> fordi det finnes stodenter registrert i denne klassen.</p><br />");
     }
 }
 
-// Henter ut alle klasser for å vise tabellen med slette-lenker
 $sqlSetning = "SELECT * FROM klasse ORDER BY klassekode;";
 $sqlResultat = mysqli_query($conn, $sqlSetning);
-$antallRader = mysqli_num_rows($sqlResultat);
 
-if ($antallRader > 0) {
-    print("<table border='1'>");
-    print("<tr><th>klassekode</th><th>klassenavn</th><th>studiumkode</th><th>Slett</th></tr>");
+if ($sqlResultat) {
+    $antallRader = mysqli_num_rows($sqlResultat);
 
-    for ($r = 1; $r <= $antallRader; $r++) {
-        $rad = mysqli_fetch_array($sqlResultat);
-        $klassekode = $rad["klassekode"];
-        $klassenavn = $rad["klassenavn"];
-        $studiumkode = $rad["studiumkode"];
+    if ($antallRader > 0) {
+        print("<table border='1'>");
+        print("<tr><th>Klassekode</th><th>Klassenavn</th><th>Studiumkode</th><th>Slett</th></tr>");
 
-        print("<tr>");
-        print("<td>$klassekode</td>");
-        print("<td>$klassenavn</td>");
-        print("<td>$studiumkode</td>");
-        print("<td><a href='slett-klasse.php?klassekode=$klassekode'>Slett</a></td>");
-        print("</tr>");
+        while ($rad = mysqli_fetch_array($sqlResultat)) {
+            $klassekode = $rad["klassekode"];
+            $klassenavn = $rad["klassenavn"];
+            $studiumkode = $rad["studiumkode"];
+
+            print("<tr>");
+            print("<td>$klassekode</td>");
+            print("<td>$klassenavn</td>");
+            print("<td>$studiumkode</td>");
+            // legger til javascript confirm-varsel her:
+            print("<td><a href='slett-klasse.php?klassekode=$klassekode' onclick=\"return confirm('Er du sikker på at du vil slette denne klassen?');\">slett</a></td>");
+            print("</tr>");
     }
+
     print("</table>");
-} else {
-    print("Ingen klasser å slette.");
+    } else {
+        print("<p>Ingen klasser å slette.</p>");
+    }
 }
 ?>
 
 <br /><br />
 <a href="index.php">Tilbake til hovedmenyen</a>
+
+
+
+
+    
+
+
+
+
+        
+
+        
+
 
