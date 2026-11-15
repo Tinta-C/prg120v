@@ -33,7 +33,7 @@ if (isset($_POST["registrer"])) {
 
     // Sjekker forst om brukernavnet finnes før
     $sjekkSql = "SELECT * FROM student WHERE brukernavn='$brukernavn';";
-    $sjekkRes = mysqli_query($conn, $sqlSetning);
+    $sjekkRes = mysqli_query($conn, $sjekkSql);
     
    if (mysqli_num_rows($sjekkRes) > 0) {
         print("<p>student med brukernavn <strong>$brukernavn</strong> er registrert fra før.</p>");
