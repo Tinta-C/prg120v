@@ -1,13 +1,12 @@
 <?php
-// slett-klasse.php
 include("db.php");
 ?>
+
 <h3>Slette klasse</h3>
 
 <?php
 if (isset($_GET["klassekode"])) {
     $klassekode = $_GET["klassekode"];
-
     $sqlSetning = "DELETE FROM klasse WHERE klassekode='$klassekode';";
 
     if (mysqli_query($conn, $sqlSetning)) {
@@ -32,15 +31,11 @@ if ($sqlResultat) {
             $klassenavn = $rad["klassenavn"];
             $studiumkode = $rad["studiumkode"];
 
-            // Riktig variabelnavn med små bokstaver
-            $urlklassekode = urlencode($klassekode);
-
             print("<tr>");
             print("<td>$klassekode</td>");
             print("<td>$klassenavn</td>");
             print("<td>$studiumkode</td>");
-            // Legger til javascript confirm-varsel her:
-            print("<td><a href='slett-klasse.php?klassekode=$urlklassekode' onclick=\"return confirm('Er du sikker på at du vil slette denne klassen?');\">slett</a></td>");
+            print("<td><a href='slett-klasse.php?klassekode=$urlklassekode' onclick=\"return confirm('Er du sikker på at du vil slette denne klassen?');\">Slett</a></td>");
             print("</tr>");
         }
     
