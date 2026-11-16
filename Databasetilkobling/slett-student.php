@@ -35,7 +35,7 @@ if ($sqlResultat) {
             print("<td>$brukernavn</td>");
             print("<td>$fornavn</td>");
             print("<td>$etternavn</td>");
-            print("<td>$klasskode</td>");
+            print("<td>$klassekode</td>");
             print("<td><a href='slett-student.php?brukernavn=$brukernavn' onclick=\"return confirm('Er du sikker?');\">Slett</a></td>");
             print("</tr>");
         }
