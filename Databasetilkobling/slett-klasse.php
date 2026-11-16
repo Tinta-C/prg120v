@@ -35,7 +35,7 @@ if ($sqlResultat) {
             print("<td>$klassekode</td>");
             print("<td>$klassenavn</td>");
             print("<td>$studiumkode</td>");
-            print("<td><a href='slett-klasse.php?klassekode=$urlklassekode' onclick=\"return confirm('Er du sikker på at du vil slette denne klassen?');\">Slett</a></td>");
+            print("<td><a href='slett-klasse.php?klassekode=$klassekode' onclick=\"return confirm('Er du sikker på at du vil slette denne klassen?');\">Slett</a></td>");
             print("</tr>");
         }
     
