@@ -1,5 +1,4 @@
 <?php
-// slett-student.php
 include("db.php");
 ?>
 
@@ -11,7 +10,7 @@ if (isset($_GET["brukernavn"])) {
     $sqlSetning = "DELETE FROM student WHERE brukernavn='$brukernavn';";
 
     if (mysqli_query($conn, $sqlSetning)) {
-        print("<p>Studenten med brukernavn <strong>$brukernavn</strong> er slettet.<br /><br />");
+        print("<p style='color:green;'>Studenten med brukernavn <strong>$brukernavn</strong> er slettet!</p><br />");
     } else {
         print("<p style='color:red;'>Feil ved sletting: " . mysqli_error($conn) . "</p><br />");
     }
@@ -38,8 +37,7 @@ if ($antallRader > 0) {
         print("<td>$fornavn</td>");
         print("<td>$etternavn</td>");
         print("<td>$klassekode</td>");
-        // javascript-bekreftelsesvarsel
-        print("<td><a href='slett-student.php?brukernavn=$brukernavn' onclick=\"return confirm('er du sikker på at du vil slette denne studenten?');\">slett</td>");
+        print("<td><a href='slett-student.php?brukernavn=$brukernavn' onclick=\"return confirm('er du sikker?');\">Slett</a></td>");
         print("</tr>");
     }
     
