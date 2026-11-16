@@ -8,7 +8,6 @@ include("db.php");
 if (isset($_GET["klassekode"])) {
     $klassekode = $_GET["klassekode"];
 
-    // Utfører sletting mot tabellen 'klasse' med liten bokstav
     $sqlSetning = "DELETE FROM klasse WHERE klassekode='$klassekode';";
 
     if (mysqli_query($conn, $sqlSetning)) {
@@ -33,8 +32,8 @@ if ($sqlResultat) {
             $klassenavn = $rad["klassenavn"];
             $studiumkode = $rad["studiumkode"];
 
-            // Sikrer at klassekoden i URL-en ikke feilformatterer spesialtegn
-            $urlKlassekode = urlencode($klassekode);
+            // Riktig variabelnavn med små bokstaver
+            $urlklassekode = urlencode($klassekode);
 
             print("<tr>");
             print("<td>$klassekode</td>");
