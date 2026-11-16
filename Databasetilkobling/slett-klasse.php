@@ -7,13 +7,14 @@ include("db.php");
 <?php
 if (isset($_GET["klassekode"])) {
     $klassekode = $_GET["klassekode"];
+
+    // Utfører sletting mot tabellen 'klasse' med liten bokstav
     $sqlSetning = "DELETE FROM klasse WHERE klassekode='$klassekode';";
 
     if (mysqli_query($conn, $sqlSetning)) {
-        print("<p>Klassen <strong>$klassekode</strong> er slettet.</p><br />");
+        print("<p style='color:green;'>Klassen <strong>$klassekode</strong> er slettet!</p><br />");
     } else {
-        // Fanger opp hvis klassen har studenter tilknyttet seg (fremmednøkkel-feil)
-        print("<p style='color:red;'>Kan ikke slette klasse <strong>$klassekode</strong> fordi det finnes stodenter registrert i denne klassen.</p><br />");
+        print("<p style='color:red;'>Kan ikke slette klasse <strong>$klassekode</strong> fordi det finnes studenter registrert i denne klassen.</p><br />");
     }
 }
 
@@ -32,16 +33,19 @@ if ($sqlResultat) {
             $klassenavn = $rad["klassenavn"];
             $studiumkode = $rad["studiumkode"];
 
+            // Sikrer at klassekoden i URL-en ikke feilformatterer spesialtegn
+            $urlKlassekode = urlencode($klassekode);
+
             print("<tr>");
             print("<td>$klassekode</td>");
             print("<td>$klassenavn</td>");
             print("<td>$studiumkode</td>");
-            // legger til javascript confirm-varsel her:
-            print("<td><a href='slett-klasse.php?klassekode=$klassekode' onclick=\"return confirm('Er du sikker på at du vil slette denne klassen?');\">slett</a></td>");
+            // Legger til javascript confirm-varsel her:
+            print("<td><a href='slett-klasse.php?klassekode=$urlklassekode' onclick=\"return confirm('Er du sikker på at du vil slette denne klassen?');\">slett</a></td>");
             print("</tr>");
-    }
-
-    print("</table>");
+        }
+    
+ print("</table>");
     } else {
         print("<p>Ingen klasser å slette.</p>");
     }
