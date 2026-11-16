@@ -1,4 +1,5 @@
 <?php
+// slett-klasse.php
 include("db.php");
 ?>
 
