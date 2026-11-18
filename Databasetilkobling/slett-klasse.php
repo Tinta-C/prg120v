@@ -1,9 +1,18 @@
+
+
+
+
+
+
+
+
+    
 <?php
-// slett-klasse.php
 include("db.php");
 $kobling = $conn ?? ($db ?? ($tilkobling ?? null));
 
-if (isset($_GET["klassekode"])) {
+// Sletter klasse hvis klassekode er sendt med i URL-en
+if (!empty($_GET["klassekode"])) {
     $klassekode = mysqli_real_escape_string($kobling, $_GET["klassekode"]);
     $sqlSetning = "DELETE FROM klasse WHERE klassekode = '$klassekode';";
 
@@ -14,6 +23,7 @@ if (isset($_GET["klassekode"])) {
     }
 }
 
+// Henter og viser tabellen med klasser
 $sqlSetning = "SELECT * FROM klasse ORDER BY klassekode;";
 $sqlResultat = mysqli_query($kobling, $sqlSetning);
 
@@ -40,20 +50,3 @@ if ($sqlResultat) {
 ?>
 <br />
 <a href="index.php">Tilbake til hovedmenyen</a>
-
-
-
-
-
-
-
-    
-
-
-
-
-        
-
-        
-
-
