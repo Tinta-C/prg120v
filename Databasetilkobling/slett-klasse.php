@@ -1,42 +1,46 @@
 <?php
 // slett-klasse.php
 include("db.php");
+$kobling = $conn ?? ($db ?? ($tilkobling ?? null));
 
-// Sjekk om klassekode er sendt via URL
 if (isset($_GET["klassekode"])) {
-    $klassekode = $_GET["klassekode"];
+    $klassekode = mysqli_real_escape_string($kobling, $_GET["klassekode"]);
     $sqlSetning = "DELETE FROM klasse WHERE klassekode = '$klassekode';";
 
-    if (mysqli_query($conn, $sqlSetning)) {
-        print("<p style='color:green;'>Klassen $klassekode er slettet!</p>");
+    if (mysqli_query($kobling, $sqlSetning)) {
+        print("<p style='color:green; font-weight:bold;'>Klassen $klassekode er slettet!</p>");
     } else {
-        print("<p style='color:red;'>Kan ikke slette klassen fordi det finnes studenter i den.</p>");
+        print("<p style='color:red; font-weight:bold;'>Feil ved sletting: " . mysqli_error($kobling) . "</p>");
     }
 }
 
 $sqlSetning = "SELECT * FROM klasse ORDER BY klassekode;";
-$sqlResultat = mysqli_query($conn, $sqlSetning);
+$sqlResultat = mysqli_query($kobling, $sqlSetning);
 
-print("<table border='1'>");
-print("<tr><th>Klassekode</th><th>Klassenavn</th><th>Studiumkode</th><th>Slett</th></tr>");
+if ($sqlResultat) {
+    print("<table border='1'>");
+    print("<tr><th>Klassekode</th><th>Klassenavn</th><th>Studiumkode</th><th>Slett</th></tr>");
 
-while ($rad = mysqli_fetch_array($sqlResultat)) {
-    $klassekode = $rad["klassekode"];
-    $klassenavn = $rad["klassenavn"];
-    $studiumkode = $rad["studiumkode"];
+    while ($rad = mysqli_fetch_array($sqlResultat)) {
+        $klassekode = $rad["klassekode"];
+        $klassenavn = $rad["klassenavn"];
+        $studiumkode = $rad["studiumkode"];
 
-    print("<tr>");
-    print("<td>$klassekode</td>");
-    print("<td>$klassenavn</td>");
-    print("<td>$studiumkode</td>");
-    print("<td><a href='slett-klasse.php?klassekode=$klassekode' onclick=\"return confirm('Er du sikker?');\">Slett</a></td>");
-    print("</tr>");
+        print("<tr>");
+        print("<td>$klassekode</td>");
+        print("<td>$klassenavn</td>");
+        print("<td>$studiumkode</td>");
+        print("<td><a href='slett-klasse.php?klassekode=$klassekode' onclick=\"return confirm('Er du sikker?');\">Slett</a></td>");
+        print("</tr>");
+    }
+    print("</table>");
+} else {
+    print("<p style='color:red;'>Kunne ikke hente klasser: " . mysqli_error($kobling) . "</p>");
 }
-print("</table>");
 ?>
-
 <br />
 <a href="index.php">Tilbake til hovedmenyen</a>
+
 
 
 
