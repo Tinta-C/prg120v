@@ -32,7 +32,7 @@ if ($sqlResultat) {
         print("<th>Brukernavn</th>");
         print("<th>Fornavn</th>");
         print("<th>Etternavn</th>");
-        print("<th>Klassekode</th>");
+        print("<th>Klassekode</th>"); 
         print("<th>Slett</th>");
         print("</tr>");
 
