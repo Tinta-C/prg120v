@@ -14,18 +14,12 @@ if (isset($_GET["brukernavn"]) && !empty($_GET["brukernavn"])) {
     $sqlSetning = "DELETE FROM student WHERE brukernavn = '$brukernavn'";
 
     if (mysqli_query($conn, $sqlSetning)) {
-        print("<p style='color:green; font-weight:bold;'>Suksess! Studenten med brukernavn '$brukernavn' er slettet.</p>");
+        print("<p style='color:green;'>Studenten med brukernavn <strong>$brukernavn</strong> er slettet!</p><br />");
     } else {
-        print("<p style='color:red; font-weight:bold;'>DATABASEFEIL: " . mysqli_error($conn) . "</p>");
+        print("<p style='color:red;'>FEIL ved sletting: " . mysqli_error($conn) . "</p><br />");
     }
-} else {
-    // Viser om skriptet i det hele tatt mottar parameteren
-    if (isset($_GET["brukernavn"])) {
-        print("<p style='color:orange;'>Mottok tom variabel for brukernavn.</p>");
-    }
-}
+} 
 
-// Hent ut alle studenter til tabellen
 $sqlSetning = "SELECT * FROM student ORDER BY brukernavn;";
 $sqlResultat = mysqli_query($conn, $sqlSetning);
 
@@ -33,8 +27,14 @@ if ($sqlResultat) {
     $antallRader = mysqli_num_rows($sqlResultat);
 
     if ($antallRader > 0) {
-        print("<table border='1' cellpadding='5'>");
-        print("<tr><th>Brukernavn</th><th>Fornavn</th><th>Etternavn</th><th>Klassekode</th><th>Slett</th></tr>");
+        print("<table border='1'>");
+        print("tr>");
+        print("<th>Brukernavn</th>");
+        print("<th>Fornavn</th>");
+        print("<th>Etternavn</th>");
+        print("<th>Klassekode</th>");
+        print("<th>Slett</th>");
+        print("</tr>");
 
         while ($rad = mysqli_fetch_array($sqlResultat)) {
             $brukernavn = $rad["brukernavn"];
@@ -43,19 +43,17 @@ if ($sqlResultat) {
             $klassekode = $rad["klassekode"];
 
             print("<tr>");
-            print("<td>$brukernavn</td>");
-            print("<td>$fornavn</td>");
-            print("<td>$etternavn</td>");
-            print("<td>$klassekode</td>");
-            print("td><a href=' slett-student.php?brukernavn=" .urlencode($brukernavn) . "' onclick=\"return confirm('Er du sikker?');\">Slett</a></td>");
+            print("<td>" . $brukernavn . "</td>");
+            print("<td>" . $fornavn . "</td>");
+            print("<td>" . $etternavn . "</td>");
+            print("<td>" . $klassekode . "</td>");
+            print("<td><a href='slett-student.php?brukernavn=" .urlencode($brukernavn) . "' onclick=\"return confirm('Er du sikker?');\">Slett</a></td>");
             print("</tr>");
         }
         print("</table>");
    } else {
-    print("<p>Ingen studenter å slette i tabellen.</p>");
+    print("<p>Ingen studenter å slette.</p>");
    }
-} else {
-    print("<p style='color:red;'>Kunne ikke hente studenter fra databasen: " . mysqli_error($conn) . "</p>");
 }
 ?>
 
