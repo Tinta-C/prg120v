@@ -10,7 +10,7 @@ include("db.php");
 if (isset($_GET["brukernavn"]) && !empty($_GET["brukernavn"])) {
     $brukernavn = trim($_GET["brukernavn"]);
 
-    //SQL-setning for sletting (prøver med liten 'student')
+    
     $sqlSetning = "DELETE FROM student WHERE brukernavn = '$brukernavn'";
 
     if (mysqli_query($conn, $sqlSetning)) {
@@ -28,7 +28,7 @@ if ($sqlResultat) {
 
     if ($antallRader > 0) {
         print("<table border='1'>");
-        print("tr>");
+        print("<tr>");
         print("<th>Brukernavn</th>");
         print("<th>Fornavn</th>");
         print("<th>Etternavn</th>");
