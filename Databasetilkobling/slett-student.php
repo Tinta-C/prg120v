@@ -4,17 +4,18 @@ $kobling = $conn ?? ($db ?? ($tilkobling ?? null));
 
 if (!empty($_GET["brukernavn"])) {
     $brukernavn = mysqli_real_escape_string($kobling, $_GET["brukernavn"]);
-    $sqlSetning = "DELETE FROM student WHERE brukernavn = '$brukernavn';";
+    $sqlSlett = "DELETE FROM student WHERE brukernavn = '$brukernavn';";
 
-    if (mysqli_query($kobling, $sqlSetning)) {
+    if (mysqli_query($kobling, $sqlSlett)) {
         print("<p style='color:green; font-weight:bold;'>Studenten $brukernavn er slettet!</p>");
     } else {
         print("<p style='color:red; font-weight:bold;'>Feil ved sletting: " . mysqli_error($kobling) . "</p>");
     }
 }
 
-$sqlSetning = "SELECT * FROM student ORDER BY brukernavn;";
-$sqlResultat = mysqli_query($kobling, $sqlResultat);
+// Henter og viser tabellen
+$sqlVis = "SELECT * FROM student ORDER BY brukernavn;";
+$sqlResultat = mysqli_query($kobling, $sqlVis);
 
 if ($sqlResultat) {
     print("<table border='1'>");
@@ -39,6 +40,8 @@ if ($sqlResultat) {
 ?>
 <br />
 <a href="index.php">Tilbake til hovedmenyen</a>
+
+
 
 
 
