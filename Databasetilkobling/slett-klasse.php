@@ -4,7 +4,7 @@ include("db.php")
 
 // Sjekk om klassekode er sendt via URL for å slette
 if (isset($_GET["klassekode"])) {
-    $klassekode = mysqli_real_escape_string($conn, $_GET["klassekoden"] ?? $_GET["klassekode"]);
+    $klassekode = mysqli_real_escape_string($conn, $_GET["klassekode"] ?? $_GET["klassekode"]);
     $sqlSetning = "DELETE FROM klasse WHERE klassekode = '$klassekode';";
 
     if (mysqli_query($conn, $sqlSetning)) {
