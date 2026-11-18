@@ -1,9 +1,9 @@
 <?php
-// slett-student.php
 include("db.php");
 $kobling = $conn ?? ($db ?? ($tilkobling ?? null));
 
-if (isset($_GET["brukernavn"])) {
+// Sletter student hvis brukernavn er sendt med
+if (!empty($_GET["brukernavn"])) {
     $brukernavn = mysqli_real_escape_string($kobling, $_GET["brukernavn"]);
     $sqlSetning = "DELETE FROM student WHERE brukernavn = '$brukernavn';";
 
@@ -14,6 +14,7 @@ if (isset($_GET["brukernavn"])) {
     }
 }
 
+// Henter og viser tabellen med korrekt mappe i slett-lenken
 $sqlSetning = "SELECT * FROM student ORDER BY brukernavn;";
 $sqlResultat = mysqli_query($kobling, $sqlSetning);
 
@@ -32,7 +33,7 @@ if ($sqlResultat) {
         print("<td>$fornavn</td>");
         print("<td>$etternavn</td>");
         print("<td>$klassekode</td>");
-        print("<td><a href='slett-student.php?brukernavn=$brukernavn' onclick=\"return confirm('Er du sikker?');\">Slett</a></td>");
+        print("<td><a href='Databasetilkobling/slett-student.php?brukernavn=$brukernavn' onclick=\"return confirm('Er du sikker?');\">Slett</a></td>");
         print("</tr>");
     }
     print("</table>");
@@ -42,6 +43,8 @@ if ($sqlResultat) {
 ?>
 <br />
 <a href="index.php">Tilbake til hovedmenyen</a>
+
+
 
 
 
