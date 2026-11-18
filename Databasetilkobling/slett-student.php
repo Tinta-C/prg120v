@@ -1,66 +1,48 @@
 <?php
 // slett-student.php
 include("db.php");
-?>
+$kobling = $conn ?? ($db ?? ($tilkobling ?? null));
 
-<h3>Slette student</h3>
+if (isset($_GET["brukernavn"])) {
+    $brukernavn = mysqli_real_escape_string($kobling, $_GET["brukernavn"]);
+    $sqlSetning = "DELETE FROM student WHERE brukernavn = '$brukernavn';";
 
-<?php
-// Sjekk om brukernavn er sendt via URL
-if (isset($_GET["brukernavn"]) && !empty($_GET["brukernavn"])) {
-    $brukernavn = mysqli_real_escape_string($conn, trim($_GET["brukernavn"]));
-
-    // Utfør sletting
-    $sqlSetning = "DELETE FROM student WHERE brukernavn = '$brukernavn'";
-
-    if (mysqli_query($conn, $sqlSetning)) {
-        print("<p style='color:green; font-weight:bold;'>Suksess! Studenten med brukernavn '$brukernavn' ble slettet fra databasen.</p><br />");
+    if (mysqli_query($kobling, $sqlSetning)) {
+        print("<p style='color:green; font-weight:bold;'>Studenten $brukernavn er slettet!</p>");
     } else {
-        print("<p style='color:red; font-weight:bold;'>Databasefeil ved sletting: " . mysqli_error($conn) . "</p><br />");
+        print("<p style='color:red; font-weight:bold;'>Feil ved sletting: " . mysqli_error($kobling) . "</p>");
     }
-} 
+}
 
-// Hent ut studentene på nytt
 $sqlSetning = "SELECT * FROM student ORDER BY brukernavn;";
-$sqlResultat = mysqli_query($conn, $sqlSetning);
+$sqlResultat = mysqli_query($kobling, $sqlSetning);
 
 if ($sqlResultat) {
-    $antallRader = mysqli_num_rows($sqlResultat);
+    print("<table border='1'>");
+    print("<tr><th>Brukernavn</th><th>Fornavn</th><th>Etternavn</th><th>Klassekode</th><th>Slett</th></tr>");
 
-    if ($antallRader > 0) {
-        print("<table border='1'>");
+    while ($rad = mysqli_fetch_array($sqlResultat)) {
+        $brukernavn = $rad["brukernavn"];
+        $fornavn = $rad["fornavn"];
+        $etternavn = $rad["etternavn"];
+        $klassekode = $rad["klassekode"];
+
         print("<tr>");
-        print("<th>Brukernavn</th>");
-        print("<th>Fornavn</th>");
-        print("<th>Etternavn</th>");
-        print("<th>Klassekode</th>"); 
-        print("<th>Slett</th>");
+        print("<td>$brukernavn</td>");
+        print("<td>$fornavn</td>");
+        print("<td>$etternavn</td>");
+        print("<td>$klassekode</td>");
+        print("<td><a href='slett-student.php?brukernavn=$brukernavn' onclick=\"return confirm('Er du sikker?');\">Slett</a></td>");
         print("</tr>");
-
-        while ($rad = mysqli_fetch_array($sqlResultat)) {
-            $brukernavn = $rad["brukernavn"];
-            $fornavn = $rad["fornavn"];
-            $etternavn = $rad["etternavn"];
-            $klassekode = $rad["klassekode"];
-
-            print("<tr>");
-            print("<td>" . $brukernavn . "</td>");
-            print("<td>" . $fornavn . "</td>");
-            print("<td>" . $etternavn . "</td>");
-            print("<td>" . $klassekode . "</td>");
-            print("<td><a href='slett-student.php?brukernavn=" .urlencode($brukernavn) . "' onclick=\"return confirm('Er du sikker på at du vil slette denne studenten?');\">Slett</a></td>");
-            print("</tr>");
-        }
-        print("</table>");
-   } else {
-    print("<p>Ingen studenter å slette i tabellen.</p>");
-   }
+    }
+    print("</table>");
 } else {
-    print("<p style='color:red;'>Kunne ikke hente studenter: " . mysqli_error($conn) ."</p>");
+    print("<p style='color:red;'>Kunne ikke hente studenter: " . mysqli_error($kobling) . "</p>");
 }
 ?>
-
-<br /><br />
+<br />
 <a href="index.php">Tilbake til hovedmenyen</a>
+
+
 
 
