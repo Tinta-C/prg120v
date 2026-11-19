@@ -1,20 +1,32 @@
 <?php
-include("db.php");
-$kobling = $conn ?? ($db ?? ($tilkobling ?? null));
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-if (!empty($_GET["brukernavn"])) {
+include("db.php");
+$kobling = $conn ?? ($db ?? ($tilkobling ?? ($con ?? null)));
+
+if (!$kobling) {
+    die("<p style='color:red; font-weight:bold;'>Feil: Fant ikke databasetilkoblingen fra db.php!</p>");
+}
+
+// Sletter student hvis brukernavn er sendt i URL-en
+if (isset($_GET["brukernavn"]) && $_GET["brukernavn"] !== "") {
     $brukernavn = mysqli_real_escape_string($kobling, $_GET["brukernavn"]);
-    $sqlSlett = "DELETE FROM student WHERE brukernavn = '$brukernavn';";
+    $sqlSlett = "DELETE FROM student WHERE brukernavn = '$brukernavn'";
 
     if (mysqli_query($kobling, $sqlSlett)) {
-        print("<p style='color:green; font-weight:bold;'>Studenten $brukernavn er slettet!</p>");
+        if (mysqli_affected_rows($kobling) > 0) {
+            print("<p style='color:green; font-weight:bold;'>Studenten $brukernavn er slettet!</p>");
+        } else {
+            print("<p style='color:orange; font-weight:bold;'>Ingen student med brukernavn '$brukernavn' ble funnet i databasen.</p>");
+        }
     } else {
         print("<p style='color:red; font-weight:bold;'>Feil ved sletting: " . mysqli_error($kobling) . "</p>");
     }
 }
 
 // Henter og viser tabellen
-$sqlVis = "SELECT * FROM student ORDER BY brukernavn;";
+$sqlVis = "SELECT * FROM student ORDER BY brukernavn";
 $sqlResultat = mysqli_query($kobling, $sqlVis);
 
 if ($sqlResultat) {
@@ -40,13 +52,4 @@ if ($sqlResultat) {
 ?>
 <br />
 <a href="index.php">Tilbake til hovedmenyen</a>
-
-
-
-
-
-
-
-
-
 
